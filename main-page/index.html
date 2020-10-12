@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index.css" type="text/css">
+    <link rel="stylesheet" href="style.css" type="text/css">
     <title>Quiz</title>
 </head>
 <body>
@@ -19,26 +19,27 @@
             <p>Points: 15</p>
         </div>
         <div class="quiz__question">
+            <h2>Question title</h2>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit in repudiandae repellendus accusamus tempora, odit expedita placeat necessitatibus incidunt voluptatum, eligendi adipisci quidem maiores officia qui corporis! Doloremque, architecto excepturi.
         </div>
-        <div class="quiz__answers quiz__answers--desktop-layout">
-            <div class="quiz__answer">
+        <div class="quiz__answers">
+            <div class="quiz__answer js-answer">
                 Loremipsumdolor sit amet. loremloremloremloremloremlorem
             </div>
-            <div class="quiz__answer">
+            <div class="quiz__answer js-answer">
                 Lorem ipsum dolor sit amet.
             </div>
-            <div class="quiz__answer">
+            <div class="quiz__answer js-answer">
                Lorem ipsum dolor sit amet.
             </div>
-            <div class="quiz__answer">
+            <div class="quiz__answer js-answer">
                 Lorem ipsum dolor sit amet.
             </div> 
         </div>
 
         <div class="quiz__buttons-wrapper">
-            <button class="quiz__button quiz__button--reset" type="reset">Reset</button>
-            <button class="quiz__button quiz__button--submit" type="submit">Next question</button>
+            <button class="quiz__button quiz__button--reset js-reset" type="reset">Reset</button>
+            <button class="quiz__button quiz__button--submit js-submit" type="submit">Next question</button>
         </div>
     </main>
 

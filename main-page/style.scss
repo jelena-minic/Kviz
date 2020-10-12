@@ -1,40 +1,18 @@
-// @use 'master' as m;
+@use 'variables' as v;
+@use 'title_page';
+@use 'mixins';
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 
-$color: rgb(221, 83, 106);
+
 *{
     margin: 0;
     font-family: 'Montserrat', sans-serif;
 }
 
-.title{
-    position: absolute;
-    left: 50%;
-    top: 40%;
-    transform: translate(-50%, -50%);
-    &__text{
-        text-align: center;
-        color: $color;
-    }
-}
-
-.start-quiz{
-    background-color: $color;
-    width: 100px;
-    height: 40px;
-    color: white;
-    font-size: 18px;
-    border-radius: 10%;
-    border-color: white;
-    position: absolute;
-    left: 50%;
-    top: 90%;
-    transform: translate(-50%, -50%);
-}
 
 body{
-    background-image: url(https://i1.wp.com/mipa.unram.ac.id/wp-content/uploads/2019/09/Savin-NY-Website-Background-Web.jpg?fit=1920%2C1080&ssl=1);
+    background-image: v.$bckgrndimg;
     background-attachment: fixed;
     background-position: center bottom;
 }
@@ -53,9 +31,8 @@ body{
 $padding: 30px;
 
 .quiz{
-    
     display: flex;
-    border: pink solid 2px;
+    border: v.$quiz_border_color;
     flex-direction: column;
     background-color: rgba(245, 237, 239, 0.7);
     align-self: center;
@@ -73,6 +50,11 @@ $padding: 30px;
         padding-top: $padding;
         text-align: justify;
         align-self: center;
+        h2{
+            text-align: center;
+            padding-bottom: 5px;
+            letter-spacing: 5px;
+        }
     }
     &__answers{
         padding-top: 5px;
@@ -82,14 +64,20 @@ $padding: 30px;
         align-self: center;
     }
     &__answer{
-        border: pink solid 2px;
+        border: transparent solid 2px;
         background-color: rgb(237, 211, 215);
         display: flex;
         flex-direction: row;
         margin-top: 30px;
         padding: 15px;
-        overflow-wrap: anywhere;
+        word-break: break-all;
         max-width: 200px;
+    }
+    &__answer:hover{
+        background-color: v.$quiz_color;
+    }
+    &__answer:active{
+        border: v.$quiz_border_color;
     }
 
     &__buttons-wrapper{
@@ -109,8 +97,12 @@ $padding: 30px;
             background-color: lightgray;
             border-color: white;
         }
+        &--reset:disabled{
+            cursor: not-allowed;
+            pointer-events: none;
+        }
         &--submit{
-            background-color:rgb(221, 83, 106);
+            background-color:v.$quiz_color;
             border-color: lightgray;
             color: white;
         }
@@ -141,7 +133,7 @@ $padding: 30px;
             flex-direction: row;
         }
         
-        &__answers--desktop-layout{
+        &__answers{
             margin-right: 50px;
             margin-left: 50px;
             padding-left: 50px;
