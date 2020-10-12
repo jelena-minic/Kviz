@@ -1,0 +1,187 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+* {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.title {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.title__text {
+  text-align: center;
+  color: #dd536a;
+}
+
+.start-quiz {
+  background-color: #dd536a;
+  width: 100px;
+  height: 40px;
+  color: white;
+  font-size: 18px;
+  border-radius: 10%;
+  border-color: white;
+  position: absolute;
+  left: 50%;
+  top: 90%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+body {
+  background-image: url(https://i1.wp.com/mipa.unram.ac.id/wp-content/uploads/2019/09/Savin-NY-Website-Background-Web.jpg?fit=1920%2C1080&ssl=1);
+  background-attachment: fixed;
+  background-position: center bottom;
+}
+
+.quiz {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border: pink solid 2px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: rgba(245, 237, 239, 0.7);
+  -ms-flex-item-align: center;
+      align-self: center;
+  margin: 30px 15px;
+  margin-top: 1200px;
+}
+
+.quiz__points {
+  padding-top: 30px;
+  padding-right: 30px;
+  text-align: left;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+}
+
+.quiz__question {
+  padding-right: 30px;
+  padding-left: 30px;
+  padding-top: 30px;
+  text-align: justify;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+.quiz__answers {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-item-align: center;
+      align-self: center;
+}
+
+.quiz__answer {
+  border: pink solid 2px;
+  background-color: #edd3d7;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  margin-top: 30px;
+  padding: 15px;
+  overflow-wrap: anywhere;
+  max-width: 200px;
+}
+
+.quiz__buttons-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  -ms-flex-item-align: center;
+      align-self: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.quiz__button {
+  width: 150px;
+  height: 30px;
+  margin-bottom: 15px;
+  margin-right: 30px;
+  margin-left: 30px;
+}
+
+.quiz__button--reset {
+  background-color: lightgray;
+  border-color: white;
+}
+
+.quiz__button--submit {
+  background-color: #dd536a;
+  border-color: lightgray;
+  color: white;
+}
+
+@media (min-width: 601px) {
+  .quiz {
+    margin-top: 1200px;
+    margin-bottom: 50px;
+  }
+}
+
+@media (min-width: 901px) {
+  .quiz {
+    width: 50%;
+    padding: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin: auto;
+    margin-top: 1400px;
+    margin-bottom: 200px;
+  }
+  .quiz__points {
+    padding-top: 20px;
+    padding-bottom: 0;
+    margin-right: 15px;
+  }
+  .quiz__question {
+    margin-right: 50px;
+    margin-left: 50px;
+    padding-bottom: 30px;
+  }
+  .quiz__buttons-wrapper {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+  .quiz__answers--desktop-layout {
+    margin-right: 50px;
+    margin-left: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+}
+/*# sourceMappingURL=index.css.map */
