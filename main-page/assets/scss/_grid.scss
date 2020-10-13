@@ -1,0 +1,60 @@
+$mobile	: 600px !default;
+$tablet	: 601px !default;
+$desktop : 901px !default;
+
+@mixin mobile-only {
+	@media (max-width : $mobile) {
+		@content;
+	}
+}
+
+@mixin tablet-only {
+	@media only screen and (min-width : $mobile + 1) and (max-width : $tablet) {
+		@content;
+	}
+}
+
+@mixin tablet-and-below {
+	@media only screen and (max-width : $tablet) {
+		@content;
+	}
+}
+
+@mixin tablet-and-up {
+	@media only screen and (min-width : $mobile + 1) {
+		@content;
+	}
+}
+
+
+@mixin desktop-and-up {
+	@media only screen and (min-width : $tablet + 1) {
+		@content;
+	}
+}
+
+
+@mixin desktop-and-below {
+	@media only screen and (max-width : $desktop) {
+		@content;
+	}
+}
+
+@mixin desktop-only {
+	@media only screen and (min-width : $tablet + 1) and (max-width : $desktop) {
+		@content;
+	}
+}
+
+// TO DO ispraviti breakpoints
+@mixin breakpoint($point) {
+    @if $point == desktop {
+      @media (min-width: 901px) { @content ; }
+   }
+     @else if $point == tablet {
+      @media (min-width: 601px) { @content ; }
+   }
+   @else if $point == mobileonly {
+      @media (max-width: 600px)  { @content ; }
+   }
+ }

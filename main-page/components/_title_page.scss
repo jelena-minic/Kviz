@@ -1,0 +1,37 @@
+// @use 'variables' as v;
+.home-intro {
+    position: relative;
+    height: 100vh;
+    margin-bottom: 100px;
+    
+    &__title {
+        position: absolute;
+        left: 50%;
+        top: 40%;
+        transform: translate(-50%, -50%);
+    }
+
+    &__text{
+        text-align: center;
+        letter-spacing: 5px;
+        font-size: 40px;
+        color: $quiz_color;
+    }
+
+    &__start-quiz {
+        background-color: $quiz_color;
+        width: 100px;
+        height: 40px;
+        color: white;
+        font-size: 18px;
+        border-radius: 10%;
+        border-color: white;
+        position: absolute;
+        left: 50%;
+        top: 90%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+
+

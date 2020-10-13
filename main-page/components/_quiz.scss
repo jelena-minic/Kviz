@@ -1,53 +1,22 @@
-@use 'variables' as v;
-@use 'title_page';
-@use 'mixins';
-
-@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
-
-
-*{
-    margin: 0;
-    font-family: 'Montserrat', sans-serif;
-}
-
-
-body{
-    background-image: v.$bckgrndimg;
-    background-attachment: fixed;
-    background-position: center bottom;
-}
-
-@mixin breakpoint($point) {
-    @if $point == desktop {
-      @media (min-width: 901px) { @content ; }
-   }
-     @else if $point == tablet {
-      @media (min-width: 601px) { @content ; }
-   }
-   @else if $point == mobileonly {
-      @media (max-width: 600px)  { @content ; }
-   }
- }
-$padding: 30px;
-
+$quiz-padding: 30px;
 .quiz{
     display: flex;
-    border: v.$quiz_border_color;
+    border: $quiz_border_color;
     flex-direction: column;
     background-color: rgba(245, 237, 239, 0.7);
     align-self: center;
     margin: 30px 15px;
-    margin-top: 1200px;
+    
     &__points{
-        padding-top: $padding;
-        padding-right: $padding;
+        padding-top: $quiz-padding;
+        padding-right: $quiz-padding;
         text-align: left;
         align-self: flex-end;
     }
     &__question{
-        padding-right: $padding;
-        padding-left: $padding;
-        padding-top: $padding;
+        padding-right: $quiz-padding;
+        padding-left: $quiz-padding;
+        padding-top: $quiz-padding;
         text-align: justify;
         align-self: center;
         h2{
@@ -74,20 +43,21 @@ $padding: 30px;
         max-width: 200px;
     }
     &__answer:hover{
-        background-color: v.$quiz_color;
+        background-color: $quiz_color;
     }
     &__answer:active{
-        border: v.$quiz_border_color;
+        border: $quiz_border_color;
     }
 
     &__buttons-wrapper{
         display: flex;
-        padding-top: $padding;
-        padding-bottom: $padding;
+        padding-top: $quiz-padding;
+        padding-bottom: $quiz-padding;
         align-self: center;
         flex-direction: column;
     }
-    &__button{
+
+    &__button {
         width: 150px;
         height: 30px;
         margin-bottom: 15px;
@@ -102,22 +72,21 @@ $padding: 30px;
             pointer-events: none;
         }
         &--submit{
-            background-color:v.$quiz_color;
+            background-color:$quiz_color;
             border-color: lightgray;
             color: white;
         }
     }
 
     @include breakpoint(tablet){
-        margin-top: 1200px;
-        margin-bottom: 50px;
+      margin-bottom: 50px;
     }
     @include breakpoint(desktop){
         width: 50%;
         padding: 0;
         display: flex;
         margin: auto;
-        margin-top: 1400px;
+      
         margin-bottom: 200px;
         &__points{
             padding-top: 20px;
@@ -127,7 +96,7 @@ $padding: 30px;
         &__question{
            margin-right: 50px;
            margin-left: 50px;
-           padding-bottom: $padding;
+           padding-bottom: $quiz-padding;
         }
         &__buttons-wrapper{
             flex-direction: row;
