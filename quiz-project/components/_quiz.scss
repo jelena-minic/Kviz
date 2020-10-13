@@ -98,11 +98,11 @@ $quiz-padding: 30px;
 
     }
 
-    @include breakpoint(tablet) {
+    @include tablet-and-up {
       margin-bottom: 50px;
     }
 
-    @include breakpoint(desktop) {
+    @include desktop-and-up {
         width: 50%;
         padding: 0;
         display: flex;
