@@ -1,5 +1,5 @@
 $quiz-padding: 30px;
-.quiz{
+.quiz {
     display: flex;
     border: $quiz_border_color;
     flex-direction: column;
@@ -7,32 +7,36 @@ $quiz-padding: 30px;
     align-self: center;
     margin: 30px 15px;
     
-    &__points{
+    &__points {
         padding-top: $quiz-padding;
         padding-right: $quiz-padding;
         text-align: left;
         align-self: flex-end;
     }
-    &__question{
+
+    &__question {
         padding-right: $quiz-padding;
         padding-left: $quiz-padding;
         padding-top: $quiz-padding;
         text-align: justify;
         align-self: center;
-        h2{
+
+        h2 {
             text-align: center;
             padding-bottom: 5px;
             letter-spacing: 5px;
         }
+
     }
-    &__answers{
+    &__answers {
         padding-top: 5px;
         padding-bottom: 5px;
         display: flex;
         flex-direction: column;
         align-self: center;
     }
-    &__answer{
+
+    &__answer {
         border: transparent solid 2px;
         background-color: rgb(237, 211, 215);
         display: flex;
@@ -42,14 +46,16 @@ $quiz-padding: 30px;
         word-break: break-all;
         max-width: 200px;
     }
-    &__answer:hover{
+
+    &__answer:hover { 
         background-color: $quiz_color;
     }
-    &__answer:active{
+
+    &__answer:active {
         border: $quiz_border_color;
     }
 
-    &__buttons-wrapper{
+    &__buttons-wrapper {
         display: flex;
         padding-top: $quiz-padding;
         padding-bottom: $quiz-padding;
@@ -63,46 +69,63 @@ $quiz-padding: 30px;
         margin-bottom: 15px;
         margin-right: 30px;
         margin-left: 30px;
-        &--reset{
+
+        &--reset {
             background-color: lightgray;
             border-color: white;
         }
-        &--reset:disabled{
+
+        &--reset:disabled {
             cursor: not-allowed;
             pointer-events: none;
+            color: grey;
+            border: rgb(155, 155, 155) 1px solid;
         }
-        &--submit{
+
+        &--submit {
             background-color:$quiz_color;
             border-color: lightgray;
             color: white;
         }
+
+        &--submit:disabled {
+            cursor: not-allowed;
+            pointer-events: none;
+            color: whitesmoke;
+            border: rgb(191, 190, 190) 1px solid;
+            background-color: rgb(226, 146, 146);
+        }
+
     }
 
-    @include breakpoint(tablet){
+    @include breakpoint(tablet) {
       margin-bottom: 50px;
     }
-    @include breakpoint(desktop){
+
+    @include breakpoint(desktop) {
         width: 50%;
         padding: 0;
         display: flex;
         margin: auto;
-      
         margin-bottom: 200px;
-        &__points{
+
+        &__points {
             padding-top: 20px;
             padding-bottom: 0;
             margin-right: 15px;
         }
-        &__question{
+
+        &__question {
            margin-right: 50px;
            margin-left: 50px;
            padding-bottom: $quiz-padding;
         }
-        &__buttons-wrapper{
+
+        &__buttons-wrapper {
             flex-direction: row;
         }
         
-        &__answers{
+        &__answers {
             margin-right: 50px;
             margin-left: 50px;
             padding-left: 50px;
@@ -110,9 +133,8 @@ $quiz-padding: 30px;
             justify-content: space-around;
             flex-direction: row;
             flex-wrap: wrap;
-            
         }
-    }
 
+    }
     
 }

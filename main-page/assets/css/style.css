@@ -111,11 +111,20 @@ body {
 .quiz__button--reset:disabled {
   cursor: not-allowed;
   pointer-events: none;
+  color: grey;
+  border: #9b9b9b 1px solid;
 }
 .quiz__button--submit {
   background-color: #dd536a;
   border-color: lightgray;
   color: white;
+}
+.quiz__button--submit:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  color: whitesmoke;
+  border: #bfbebe 1px solid;
+  background-color: #e29292;
 }
 @media (min-width: 601px) {
   .quiz {
