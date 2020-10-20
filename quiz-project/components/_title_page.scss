@@ -11,10 +11,8 @@
     }
 
     &__text {
+        @extend %h1;
         text-align: center;
-        letter-spacing: 5px;
-        font-size: 40px;
-        color: $quiz_color;
     }
 
     &__start-quiz {

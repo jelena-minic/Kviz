@@ -6,7 +6,7 @@ $quiz-padding: 30px;
     background-color: rgba(245, 237, 239, 0.7);
     align-self: center;
     margin: 30px 15px;
-    
+    @include spacer('s', 'bottom');
     &__points {
         padding-top: $quiz-padding;
         padding-right: $quiz-padding;
@@ -18,13 +18,13 @@ $quiz-padding: 30px;
         padding-right: $quiz-padding;
         padding-left: $quiz-padding;
         padding-top: $quiz-padding;
-        text-align: justify;
         align-self: center;
+        text-align: justify;
 
         h2 {
+            @extend %h2;
             text-align: center;
             padding-bottom: 5px;
-            letter-spacing: 5px;
         }
 
     }
@@ -108,7 +108,7 @@ $quiz-padding: 30px;
         display: flex;
         margin: auto;
         margin-bottom: 200px;
-
+        @include spacer ('l', 'bottom');
         &__points {
             padding-top: 20px;
             padding-bottom: 0;

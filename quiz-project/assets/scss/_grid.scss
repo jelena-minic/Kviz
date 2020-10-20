@@ -1,3 +1,4 @@
+// breakpoints
 $mobile	: 600px !default;
 $tablet	: 601px !default;
 $desktop : 901px !default;
@@ -45,3 +46,20 @@ $desktop : 901px !default;
 		@content;
 	}
 }
+
+// spacer
+@mixin spacer($value, $dir){
+	$side: map-get($direction, $dir);
+	$val: map-get($size, $value);
+	#{$side}: #{$val};
+ }
+ $size: (
+	 s: 30px,
+	 l: 200px
+ );
+ $direction: (
+	 top: margin-top,
+	 bottom: margin-bottom,
+	 left: margin-left,
+	 right: margin-right
+ );

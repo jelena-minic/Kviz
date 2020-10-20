@@ -1,4 +1,20 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local("Montserrat Regular"), local("Montserrat-Regular"), url(https://fonts.gstatic.com/s/montserrat/v15/JTUSjIg1_i6t8kCHKm459WlhyyTh89Y.woff2) format("woff2");
+}
+.home-intro__text {
+  font-size: 40px;
+  color: #dd536a;
+  letter-spacing: 5px;
+}
+
+.quiz__question h2 {
+  letter-spacing: 5px;
+}
+
 * {
   margin: 0;
   font-family: "Montserrat", sans-serif;
@@ -23,9 +39,6 @@ body {
 }
 .home-intro__text {
   text-align: center;
-  letter-spacing: 5px;
-  font-size: 40px;
-  color: #dd536a;
 }
 .home-intro__start-quiz {
   background-color: #dd536a;
@@ -48,6 +61,7 @@ body {
   background-color: rgba(245, 237, 239, 0.7);
   align-self: center;
   margin: 30px 15px;
+  margin-bottom: 30px;
 }
 .quiz__points {
   padding-top: 30px;
@@ -59,13 +73,12 @@ body {
   padding-right: 30px;
   padding-left: 30px;
   padding-top: 30px;
-  text-align: justify;
   align-self: center;
+  text-align: justify;
 }
 .quiz__question h2 {
   text-align: center;
   padding-bottom: 5px;
-  letter-spacing: 5px;
 }
 .quiz__answers {
   padding-top: 5px;
@@ -137,6 +150,7 @@ body {
     padding: 0;
     display: flex;
     margin: auto;
+    margin-bottom: 200px;
     margin-bottom: 200px;
   }
   .quiz__points {
