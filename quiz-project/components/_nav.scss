@@ -1,0 +1,58 @@
+.header {
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+    background-color: whitesmoke;
+
+    &__nav {
+        float: left;
+        padding-left: 40px;
+        display: flex;
+
+        a {
+            font-size: 18px;
+            color: rgb(235, 129, 129);
+            text-align: center;
+            padding: 15px 20px;
+            text-decoration: none;
+            box-sizing: border-box;
+            white-space: nowrap;
+            display: block;
+        }
+        a:hover {
+            background-color:rgba(0,0,0,0.1);
+        }
+    }
+    
+    .dropdown {
+        position: relative;
+
+        &__button {
+            font-size: 18px;
+            border: none;
+            outline: none;
+            color: rgb(235, 129, 129);
+            padding: 15px 20px;
+            background-color: inherit;
+        }
+
+        &__button:hover {
+            background-color:rgba(0,0,0,0.1);
+        }
+
+        &__content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            box-sizing: border-box;
+            left: 0;
+        }
+    }
+
+    .dropdown:hover .dropdown__content {
+        display: block;
+    }
+}

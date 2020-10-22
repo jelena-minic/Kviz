@@ -1,3 +1,5 @@
+$center-button: translate(-50%, -50%);
+
 .home-intro {
     position: relative;
     height: 100vh;
@@ -5,9 +7,9 @@
     
     &__title {
         position: absolute;
-        left: 50%;
+        width: 100%;
+        margin: auto;
         top: 40%;
-        transform: translate(-50%, -50%);
     }
 
     &__text {
@@ -23,10 +25,30 @@
         font-size: 18px;
         border-radius: 10%;
         border-color: white;
-        position: absolute;
-        left: 50%;
+        position: relative;
+        display: block;
+        margin-right: auto;
+        margin-left: auto;
         top: 90%;
-        transform: translate(-50%, -50%);
+        animation: wiggle 1s linear 2s both infinite;
+    }
+
+    @keyframes wiggle {
+        0% { 
+            transform: rotate(0deg); 
+        }
+       80% { 
+           transform: rotate(0deg); 
+        }
+       87% { 
+           transform: rotate(7deg); 
+        }
+       92% { 
+           transform: rotate(-7deg); 
+        }
+      100% { 
+          transform: rotate(0deg); 
+        }
     }
     
 }

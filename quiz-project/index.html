@@ -7,6 +7,21 @@
     <title>Quiz</title>
 </head>
 <body>
+
+    <header class="header">
+        <nav class="header__nav">
+            <a href="#">Home</a>
+            <div class="dropdown">
+                <button class="dropdown__button">Quiz</button>
+                <div class="dropdown__content">
+                    <a href="#quiz">First section</a>
+                    <a href="#quiz">Second section</a>
+                    <a href="#quiz">Third section</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
     <section class="home-intro">
         <div class="home-intro__title">
             <h1 class="home-intro__text">Quiz title</h1>
@@ -16,7 +31,7 @@
         </button>
     </section>
 
-    <main class="quiz">
+    <main id="quiz" class="quiz">
         <div class="quiz__points">
             <p>Points: 15</p>
         </div>
