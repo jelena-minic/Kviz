@@ -4,8 +4,6 @@ $quiz-padding: 30px;
     border: $quiz_border_color;
     flex-direction: column;
     background-color: rgba(245, 237, 239, 0.7);
-    align-self: center;
-    margin: 30px 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 10px;
     @include spacer('s', 'bottom');
@@ -51,7 +49,7 @@ $quiz-padding: 30px;
     }
 
     &__answer:hover { 
-        background-color: $quiz_color;
+        background-color: $brand_color;
         transition: background-color 1.5s linear;
         animation: shake 0.75s linear both;
     }
@@ -107,7 +105,7 @@ $quiz-padding: 30px;
         }
 
         &--submit {
-            background-color:$quiz_color;
+            background-color:$brand_color;
             border-color: lightgray;
             color: white;
         }
@@ -131,10 +129,8 @@ $quiz-padding: 30px;
     }
 
     @include desktop-and-up {
-        width: 50%;
         padding: 0;
         display: flex;
-        margin: auto;
         @include spacer ('l', 'bottom');
         &__points {
             padding-top: 20px;
@@ -143,8 +139,8 @@ $quiz-padding: 30px;
         }
 
         &__question {
-           margin-right: 50px;
-           margin-left: 50px;
+           padding-right: 50px;
+           padding-left: 50px;
            padding-bottom: $quiz-padding;
         }
 

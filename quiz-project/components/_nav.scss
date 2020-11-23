@@ -5,23 +5,37 @@
     background-color: whitesmoke;
 
     &__nav {
-        float: left;
-        padding-left: 40px;
+        float: right;
+        padding-right: 20px;
         display: flex;
-
+        flex-direction: column;
+        transform: translateX(100%);
+        height: 5vh;
+        transition: transform 0.5s ease, height 0.3s linear 0.2s;
+        
+        
         a {
             font-size: 18px;
             color: rgb(235, 129, 129);
-            text-align: center;
+            text-align: left;
             padding: 15px 20px;
             text-decoration: none;
             box-sizing: border-box;
             white-space: nowrap;
             display: block;
+            
         }
         a:hover {
             background-color:rgba(0,0,0,0.1);
         }
+
+        &--active {
+            transform: translateX(0%);
+            height: 25vh;
+            transition: transform 0.5s ease 0.2s, height 0.3s linear;
+            // TO DO: uraditi preko animation
+        }
+
     }
     
     .dropdown {
@@ -48,11 +62,100 @@
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
             box-sizing: border-box;
-            left: 0;
+            right: 0;
         }
     }
 
     .dropdown:hover .dropdown__content {
         display: block;
+    }
+
+    .burger {
+        display: block;
+        cursor: pointer;
+        margin-top: 10px;
+        margin-left: 15px;
+    }
+
+    .burger div {
+        width: 25px;
+        height: 3px;
+        background-color: rgb(235, 129, 129);
+        margin: 5px;
+        padding-left: 0px;
+        transition: all 0.3s ease;
+    }
+
+    .toggle .burger__line1 {
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+
+    .toggle .burger__line2 {
+        opacity: 0;
+    }
+
+    .toggle .burger__line3 {
+        transform: rotate(45deg) translate(-5px, -6px);
+    }
+
+    @include desktop-and-up {
+        &__nav {
+            float: left;
+            padding-left: 40px;
+            display: flex;
+            flex-direction: row;
+            transform: translateX(0%);
+            height: 50px;
+    
+            a {
+                font-size: 18px;
+                color: rgb(235, 129, 129);
+                text-align: center;
+                padding: 15px 20px;
+                text-decoration: none;
+                box-sizing: border-box;
+                white-space: nowrap;
+                display: block;
+            }
+            a:hover {
+                background-color:rgba(0,0,0,0.1);
+            }
+        }
+        
+        .dropdown {
+            position: relative;
+    
+            &__button {
+                font-size: 18px;
+                border: none;
+                outline: none;
+                color: rgb(235, 129, 129);
+                padding: 15px 20px;
+                background-color: inherit;
+            }
+    
+            &__button:hover {
+                background-color:rgba(0,0,0,0.1);
+            }
+    
+            &__content {
+                display: none;
+                position: absolute;
+                background-color: #f9f9f9;
+                min-width: 200px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+                box-sizing: border-box;
+                left: 0;
+            }
+        }
+    
+        .dropdown:hover .dropdown__content {
+            display: block;
+        }
+
+        .burger {
+            display: none;
+        }
     }
 }

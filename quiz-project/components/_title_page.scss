@@ -1,6 +1,5 @@
-$center-button: translate(-50%, -50%);
-
 .home-intro {
+    @include spacer('l', 'bottom');
     position: relative;
     height: 100vh;
     margin-bottom: 100px;
@@ -18,7 +17,7 @@ $center-button: translate(-50%, -50%);
     }
 
     &__start-quiz {
-        background-color: $quiz_color;
+        background-color: $brand_color;
         width: 100px;
         height: 40px;
         color: white;

@@ -1,10 +1,18 @@
-*{
+* {
     margin: 0;
     font-family: 'Montserrat', sans-serif;
 }
 
-body{
+html {
+    scroll-behavior: smooth;
+}
+
+body {
     background-image: $bckgrndimg;
     background-attachment: fixed;
     background-position: center bottom;
+}
+
+img{
+    vertical-align: middle;
 }

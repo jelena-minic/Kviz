@@ -11,6 +11,8 @@
     <header class="header">
         <nav class="header__nav">
             <a href="#">Home</a>
+            <a href="#img-slider">Slider</a>
+            <a href="#accordion">Accordion</a>
             <div class="dropdown">
                 <button class="dropdown__button">Quiz</button>
                 <div class="dropdown__content">
@@ -20,6 +22,11 @@
                 </div>
             </div>
         </nav>
+        <div class="burger">
+            <div class="burger__line1"></div>
+            <div class="burger__line2"></div>
+            <div class="burger__line3"></div>
+        </div>
     </header>
 
     <section class="home-intro">
@@ -31,34 +38,72 @@
         </button>
     </section>
 
-    <main id="quiz" class="quiz">
-        <div class="quiz__points">
-            <p>Points: 15</p>
-        </div>
-        <div class="quiz__question">
-            <h2>Question title</h2>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit in repudiandae repellendus accusamus tempora, odit expedita placeat necessitatibus incidunt voluptatum, eligendi adipisci quidem maiores officia qui corporis! Doloremque, architecto excepturi.</p>
-        </div>
-        <div class="quiz__answers">
-            <div class="quiz__answer js-answer">
-                Loremipsumdolor sit amet. loremloremloremloremloremlorem
-            </div>
-            <div class="quiz__answer js-answer">
-                Lorem ipsum dolor sit amet.
-            </div>
-            <div class="quiz__answer js-answer">
-               Lorem ipsum dolor sit amet.
-            </div>
-            <div class="quiz__answer js-answer">
-                Lorem ipsum dolor sit amet.
-            </div> 
-        </div>
+    <div class="container">
+        <section id="img-slider" class="img-slider">
+            <a href="#1" class="img-slider__slide img-slider__slide--active js-slide"><img class="img-slider__img" src="https://via.placeholder.com/860x400?text=image+1" alt="image1"></a>
+            <a href="#2" class="img-slider__slide js-slide"><img class="img-slider__img" src="https://via.placeholder.com/860x400?text=image+2" alt="image2"></a>
+            <a href="#3" class="img-slider__slide js-slide"><img class="img-slider__img" src="https://via.placeholder.com/860x400?text=image+3" alt="image3"></a>
+            <button class="img-slider__button img-slider__button--left js-prev" onclick="decrementSlider(infinite)">
+                <div class="img-slider__arrow img-slider__arrow--left"></div>
+            </button>
+            <button class="img-slider__button img-slider__button--right js-next" onclick="incrementSlider(infinite)">
+                <div class="img-slider__arrow img-slider__arrow--right"></div>
+            </button>
+        </section>
+        <section class="slider-dots">
+            <ul class="slider-dots__list">
+                <li class="slider-dots__dot slider-dots__dot--active js-dot" onclick="currentDot(0)"></li>
+                <li class="slider-dots__dot js-dot" onclick="currentDot(1)"></li>
+                <li class="slider-dots__dot js-dot" onclick="currentDot(2)"></li>
+            </ul>
+        </section>
+    </div>
 
-        <div class="quiz__buttons-wrapper">
-            <button class="quiz__button quiz__button--reset js-reset" type="reset">Reset</button>
-            <button class="quiz__button quiz__button--submit js-submit" type="submit">Next question</button>
+    <div class="container">
+        <section id="accordion" class="accordion">
+            <div class="accordion__button js-accordion-button"> Click me!</div>
+            <div class="accordion__content js-accordion-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam qui excepturi consequuntur quod enim! Doloribus eveniet quasi accusamus culpa harum, quia tempora architecto eius ipsa quisquam minima voluptate id tenetur? Lorem, ipsum dolor sit amet consectetur adipisicing elit. Officiis voluptatibus quasi architecto corporis vel, sunt mollitia. Nisi ab tenetur quas eaque recusandae qui suscipit facere nam corrupti rem. Culpa, delectus!</div>
+            <div class="accordion__button js-accordion-button"> Click me!</div>
+            <div class="accordion__content js-accordion-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam qui excepturi consequuntur quod enim! Doloribus eveniet quasi accusamus culpa harum, quia tempora architecto eius ipsa quisquam minima voluptate id tenetur?</div>
+            <div class="accordion__button js-accordion-button"> Click me!</div>
+            <div class="accordion__content js-accordion-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam qui excepturi consequuntur quod enim! Doloribus eveniet quasi accusamus culpa harum, quia tempora architecto eius ipsa quisquam minima voluptate id tenetur?</div>
+        </section>
+   </div>
+
+    <main>
+        <div class="container">
+            <section id="quiz" class="quiz">
+                <div class="quiz__points">
+                    <p>Points: 15</p>
+                </div>
+                <div class="quiz__question">
+                    <h2>Question title</h2>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Suscipit in repudiandae repellendus accusamus tempora, odit expedita placeat necessitatibus incidunt voluptatum, eligendi adipisci quidem maiores officia qui corporis! Doloremque, architecto excepturi.</p>
+                </div>
+                <div class="quiz__answers">
+                    <div class="quiz__answer js-answer">
+                        Loremipsumdolor sit amet. loremloremloremloremloremlorem
+                    </div>
+                    <div class="quiz__answer js-answer">
+                        Lorem ipsum dolor sit amet.
+                    </div>
+                    <div class="quiz__answer js-answer">
+                    Lorem ipsum dolor sit amet.
+                    </div>
+                    <div class="quiz__answer js-answer">
+                        Lorem ipsum dolor sit amet.
+                    </div> 
+                </div>
+    
+                <div class="quiz__buttons-wrapper">
+                    <button class="quiz__button quiz__button--reset js-reset" type="reset">Reset</button>
+                    <button class="quiz__button quiz__button--submit js-submit" type="submit">Next question</button>
+                </div>
+            </section>
         </div>
     </main>
 
+
+    <script src="assets/js/app.js"></script>
 </body>
 </html>

@@ -1,0 +1,55 @@
+.accordion {
+    @include spacer ('l', 'bottom');
+    @include spacer ('l', 'top');
+    border: $quiz_border_color;
+    flex-direction: column;
+    background-color: rgba(245, 237, 239, 0.7);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+    padding: 50px;
+
+    &__button {
+        background-color: rgb(242, 219, 219);
+        color: #444;
+        cursor: pointer;
+        padding: 15px 0;
+        width: 100%;
+        border: none;
+        outline: none;
+        transition: 0.4s;
+
+        &--active {
+            background-color: rgb(240, 202, 202);
+        }
+
+        &:hover {
+            background-color: rgb(240, 202, 202);
+        }
+        
+        &::after {
+        content: "\2228";
+        color: #444;
+        font-weight: bold;
+        float: right;
+        margin-right: 10px;
+        transition: all 0.4s ease-in;
+        }
+
+        &--active::after {
+            content: "\2228";
+            transform: rotate(180deg);
+        }
+
+    }
+
+    &__content {
+        background-color: rgba(242, 219, 219, 0.5);
+        // display: none;
+        padding: 0 10px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+    }
+
+}
+
