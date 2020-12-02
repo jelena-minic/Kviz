@@ -12,7 +12,8 @@
   letter-spacing: 5px;
 }
 
-.quiz__question h2 {
+.quiz__question {
+  font-size: 20px;
   letter-spacing: 5px;
 }
 
@@ -27,10 +28,6 @@
 * {
   margin: 0;
   font-family: "Montserrat", sans-serif;
-}
-
-html {
-  scroll-behavior: smooth;
 }
 
 body {
@@ -373,13 +370,18 @@ img {
   background-color: rgba(245, 237, 239, 0.7);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
+  min-height: 700px;
   margin-bottom: 30px;
 }
+.quiz__wrapper {
+  align-self: center;
+}
 .quiz__points {
-  padding-top: 30px;
+  padding-top: 50px;
   padding-right: 30px;
   text-align: left;
   align-self: flex-end;
+  letter-spacing: 5px;
 }
 .quiz__question {
   padding-right: 30px;
@@ -397,22 +399,36 @@ img {
   padding-bottom: 5px;
   display: flex;
   flex-direction: column;
-  align-self: center;
+  justify-content: center;
 }
 .quiz__answer {
+  box-sizing: border-box;
   border: transparent solid 2px;
   background-color: #edd3d7;
   display: flex;
   flex-direction: row;
   margin-top: 30px;
+  margin-right: 35px;
+  margin-left: 35px;
   padding: 15px;
   word-break: break-all;
   max-width: 200px;
+  flex-grow: 1;
+  justify-content: center;
+}
+.quiz__answer--selected {
+  background-color: #dd536a;
+}
+.quiz__answer--correct {
+  background-color: #468060;
+}
+.quiz__answer--wrong {
+  background-color: #c11630;
 }
 .quiz__answer:hover {
   background-color: #dd536a;
   transition: background-color 1.5s linear;
-  animation: shake 0.75s linear both;
+  animation: shake 1s linear both;
 }
 @keyframes shake {
   10%, 90% {
@@ -430,6 +446,11 @@ img {
 }
 .quiz__answer:active {
   border: pink solid 2px;
+}
+.quiz__completed {
+  padding: 45% 20px;
+  letter-spacing: 5px;
+  text-align: center;
 }
 .quiz__buttons-wrapper {
   display: flex;
@@ -481,11 +502,12 @@ img {
 @media only screen and (min-width: 602px) {
   .quiz {
     padding: 0;
+    min-height: 500px;
     display: flex;
     margin-bottom: 170px;
   }
   .quiz__points {
-    padding-top: 20px;
+    padding-top: 50px;
     padding-bottom: 0;
     margin-right: 15px;
   }
@@ -493,6 +515,7 @@ img {
     padding-right: 50px;
     padding-left: 50px;
     padding-bottom: 30px;
+    text-align: center;
   }
   .quiz__buttons-wrapper {
     flex-direction: row;
@@ -505,6 +528,9 @@ img {
     justify-content: space-around;
     flex-direction: row;
     flex-wrap: wrap;
+  }
+  .quiz__completed {
+    padding: 35% 0;
   }
 }
 
