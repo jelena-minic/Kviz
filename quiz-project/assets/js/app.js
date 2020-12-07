@@ -15,8 +15,57 @@ quizDynamicNames = {
     answer: 'quiz__answer',
     selectedAnswer: 'quiz__answer--selected',
     correct: 'quiz__answer--correct',
-    wrong: 'quiz__answer--wrong'
+    wrong: 'quiz__answer--wrong',
+    questionBlock: 'quiz__question-block',
+    activeQuestionBlock: 'quiz__question-block--active',
+    error: 'quiz__wrapper-error',
+    loader: 'quiz__wrapper-loader'
 }
+
+const url = 'http://localhost:3000/questions';
+const getQuestions = async () => {
+    try {
+        const response = await fetch(url)
+        if(response.ok) {
+            const questionsJson = await response.json();
+            renderQuestionBlock(questionsJson[currentQuestionIndex]);
+            let loader = get('.' + quizDynamicNames.loader);
+            if(loader) {
+                loader.remove();
+            }
+        } 
+    }
+    catch(error) {
+        error = createElement("p", [quizDynamicNames.error], undefined, "Quiz couldn't load");
+        wrapper.appendChild(error);
+    } 
+}
+const getSelected = async () => {
+    try {
+        const response = await fetch(url)
+        if(response.ok) {
+            const questionsJson = await response.json();
+            getSelectedAnswers(questionsJson[currentQuestionIndex]);
+            getCurrentPoints();
+            if(currentQuestionIndex === questionsJson.length-1) {
+                setFinishButton();
+            } else {
+                setNextQuestion();
+            }
+        } 
+    }
+    catch(error) {
+        error = createElement("p", [quizDynamicNames.error], undefined, "Error");
+        wrapper.appendChild(error);
+    } 
+}
+
+function setLoader() {
+    let wrapper = get(quizClassNames.wrapper);
+    let loader = createElement('p', [quizDynamicNames.loader], undefined, 'Loading...');
+    wrapper.appendChild(loader);
+}
+
 let currentQuestionIndex;
 let currentPoints;
 // start quiz button
@@ -26,8 +75,12 @@ startQuiz.addEventListener('click', function () {
     quizPos.scrollIntoView({behavior: "smooth"});
     currentQuestionIndex = 0;
     currentPoints = 0;
-    renderNextQuestionBlock();
-    getCurrentPoints();
+    
+    setLoader();
+    setTimeout(getCurrentPoints, 2000);
+    setTimeout(getQuestions, 2000);
+    
+    // getQuestions();
     setSubmit();
 });
 
@@ -58,22 +111,22 @@ function setFinishButton() {
 }
 
 function handleSubmit() {
-    getSelectedAnswers(questions[currentQuestionIndex]);
-    getCurrentPoints();
+    // getCurrentPoints();
+    getSelected();
     let answers = document.querySelectorAll(quizClassNames.answers)[currentQuestionIndex];
     answers.style.pointerEvents = 'none';
-    if(currentQuestionIndex === questions.length-1) {
-        setFinishButton();
-    } else {
-        setNextQuestion();
-    }
+    // if(currentQuestionIndex === questions.length-1) {
+    //     setFinishButton();
+    // } else {
+        // setNextQuestion();
+    // }
 }
 
 function handleNextQuestion() {
     hidePreviousBlock(currentQuestionIndex);
     currentQuestionIndex++;
     
-    renderNextQuestionBlock();
+    getQuestions();
     setSubmit();
 }
 
@@ -87,42 +140,42 @@ function handleFinishButton() {
     points.style.display = 'none';
 }
 
-function preventScroll (event) {
+function preventScroll () {
     document.body.style.overflow = 'hidden';
 }
 const el = get('body');
 el.onwheel = preventScroll;
 
 // object with questions and answers
-let questions = [
-    {
-        question: 'First question?', 
-        answers: [
-            { text: 'First answer 1', correct: true},
-            { text: 'Second answer 1', correct: false},
-            { text: 'Third answer 1', correct: true},
-            { text: 'Fourth answer 1', correct: false},
-            { text: 'Fifth answer 1', correct: true}
-        ]
-    },
-    {
-        question: 'Second question?',
-        answers: [
-            { text: 'First answer 2', correct: false},
-            { text: 'Second answer 2', correct: true},
-            { text: 'Third answer 2', correct: true}
-        ]
-    },
-    {
-        question: 'Third question?',
-        answers: [
-            { text: 'First answer 3', correct: true},
-            { text: 'Second answer 3', correct: false},
-            { text: 'Third answer 3', correct: false},
-            { text: 'Fourth answer 3', correct: false}
-        ]
-    }
-];
+// let questions = [
+//     {
+//         question: 'First question?', 
+//         answers: [
+//             { text: 'First answer 1', correct: true},
+//             { text: 'Second answer 1', correct: false},
+//             { text: 'Third answer 1', correct: true},
+//             { text: 'Fourth answer 1', correct: false},
+//             { text: 'Fifth answer 1', correct: true}
+//         ]
+//     },
+//     {
+//         question: 'Second question?',
+//         answers: [
+//             { text: 'First answer 2', correct: false},
+//             { text: 'Second answer 2', correct: true},
+//             { text: 'Third answer 2', correct: true}
+//         ]
+//     },
+//     {
+//         question: 'Third question?',
+//         answers: [
+//             { text: 'First answer 3', correct: true},
+//             { text: 'Second answer 3', correct: false},
+//             { text: 'Third answer 3', correct: false},
+//             { text: 'Fourth answer 3', correct: false}
+//         ]
+//     }
+// ];
 
 // version with nested loop
 // function getSelectedAnswers(question) {
@@ -147,28 +200,27 @@ let questions = [
 // }
 
 
-function getSelectedAnswers(question) {
-    // without nested loop
-    let selected = document.querySelectorAll('.' + quizDynamicNames.selectedAnswer);
-    // dohvatiti samo vidljive, ako nemaju drugu klasu
-    let selectedArray = Array.from(selected);
-    
-    let filArr = selectedArray.filter(el => el.classList.length < 3);
+function getSelectedAnswers (question){
+        // without nested loop
+        let selected = document.querySelectorAll(`div.${quizDynamicNames.activeQuestionBlock} button.${quizDynamicNames.selectedAnswer}`);
+        // dohvatiti samo vidljive, ako nemaju drugu klasu
+        let selectedArray = Array.from(selected);
 
-    filArr.forEach (answer => {
-        let filteredAnswer = question.answers.filter(answerObject => (answerObject.text === answer.innerHTML))[0];
-        if(!filteredAnswer) {
-            return;
-        }
-        // ako ima greska razmisliti o resenju (greska u kvizu npr)
-        if(filteredAnswer.correct) {
-            answer.classList.add('quiz__answer--correct');
-            currentPoints++;
-        } else {
-            answer.classList.add('quiz__answer--wrong');
-            currentPoints--;
-        }
-    });
+        selectedArray.forEach (answer => {
+            let filteredAnswer = question.answers.filter(answerObject => (answerObject.text === answer.innerHTML))[0];
+
+            if(!filteredAnswer) {
+                return;
+            }
+            // ako ima greska razmisliti o resenju (greska u kvizu npr)
+            if(filteredAnswer.correct) {
+                answer.classList.add(quizDynamicNames.correct);
+                currentPoints++;
+            } else {
+                answer.classList.add(quizDynamicNames.wrong);
+                currentPoints--;
+            }
+        });
 
     // ispod je verzija sa dve forEach petlje
     // selectedArray.forEach(answer => {
@@ -196,10 +248,11 @@ function selectedAnswer(answer) {
     let submitAnswers = get(quizClassNames.submit);
     answer.addEventListener('click', function() {
         answer.classList.toggle(quizDynamicNames.selectedAnswer);
-        let selectedArr = document.querySelectorAll('.' + quizDynamicNames.selectedAnswer);
+        let selectedArr = document.querySelectorAll(`div.${quizDynamicNames.activeQuestionBlock} button.${quizDynamicNames.selectedAnswer}`);
         let selected = Array.from(selectedArr);
-        let filtered = selected.filter(el => el.classList.length < 3);
-        if(filtered.length === 0) {
+        console.log(selected);
+        
+        if(selected.length === 0) {
             submitAnswers.disabled = true;
         } else {
             submitAnswers.disabled = false;
@@ -212,7 +265,7 @@ function renderAnswers(question) {
     let answerWrapper = createElement('div', [quizDynamicNames.answers]);
     
     question.answers.forEach(answer => {
-        answerWrapper.appendChild(createElement('div', [quizDynamicNames.answer], undefined, answer.text, selectedAnswer));
+        answerWrapper.appendChild(createElement('button', [quizDynamicNames.answer], undefined, answer.text, selectedAnswer));
     });
     return answerWrapper;
 }
@@ -220,7 +273,8 @@ function renderAnswers(question) {
 // rendering question
 function renderQuestionBlock(question) {
     let wrapper = get(quizClassNames.wrapper);
-    let questionBlock = createElement('div', ['question__block']);
+    
+    let questionBlock = createElement('div', [quizDynamicNames.questionBlock, quizDynamicNames.activeQuestionBlock]);
     let questionHTML = createElement('div', [quizDynamicNames.question], undefined, question.question);
     
     questionBlock.appendChild(questionHTML);
@@ -231,8 +285,8 @@ function renderQuestionBlock(question) {
 
 // previous question and answers remain in the DOM
 function hidePreviousBlock(currentQuestionIndex) {
-    let previous = document.querySelectorAll('.question__block')[currentQuestionIndex];
-    previous.style.display = 'none'; 
+    let previous = document.querySelectorAll('.quiz__question-block')[currentQuestionIndex];
+    previous.classList.remove('quiz__question-block--active');
 }
 
 // rendering next question with answers

@@ -40,6 +40,11 @@ img {
   vertical-align: middle;
 }
 
+button {
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
 .header {
   position: fixed;
   z-index: 10;
@@ -376,6 +381,12 @@ img {
 .quiz__wrapper {
   align-self: center;
 }
+.quiz__wrapper-error {
+  padding: 150px 15px;
+}
+.quiz__wrapper-loader {
+  padding: 150px 15px;
+}
 .quiz__points {
   padding-top: 50px;
   padding-right: 30px;
@@ -393,6 +404,12 @@ img {
 .quiz__question h2 {
   text-align: center;
   padding-bottom: 5px;
+}
+.quiz__question-block {
+  display: none;
+}
+.quiz__question-block--active {
+  display: block;
 }
 .quiz__answers {
   padding-top: 5px;
@@ -413,8 +430,10 @@ img {
   padding: 15px;
   word-break: break-all;
   max-width: 200px;
+  min-width: 150px;
   flex-grow: 1;
   justify-content: center;
+  font-size: 15px;
 }
 .quiz__answer--selected {
   background-color: #dd536a;
@@ -465,6 +484,7 @@ img {
   margin-bottom: 15px;
   margin-right: 30px;
   margin-left: 30px;
+  font-size: 15px;
 }
 .quiz__button--reset {
   background-color: lightgray;
@@ -521,10 +541,10 @@ img {
     flex-direction: row;
   }
   .quiz__answers {
-    margin-right: 50px;
-    margin-left: 50px;
-    padding-left: 50px;
-    padding-right: 50px;
+    margin-right: 100px;
+    margin-left: 100px;
+    padding-left: 60px;
+    padding-right: 60px;
     justify-content: space-around;
     flex-direction: row;
     flex-wrap: wrap;

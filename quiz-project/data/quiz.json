@@ -60,23 +60,23 @@
             ]
         },
         {
-            "question": "Which states in the US don't have a city named Athens?", 
+            "question": "Which countries are the biggest producers of cocoa?", 
             "answers": [
                 { 
-                    "text" : "Michigan", 
+                    "text" : "Indonesia", 
                     "correct" : true
                 },
                 { 
-                    "text" : "Ohio", 
+                    "text" : "Australia", 
                     "correct" : false
                 },
                 {
-                    "text" : "Alaska", 
+                    "text" : "Jamaica", 
                     "correct" : false
                 },
                 { 
-                    "text" : "Delaware", 
-                    "correct" : false
+                    "text" : "Ivory Coast", 
+                    "correct" : true
                 }
             ]
         },
