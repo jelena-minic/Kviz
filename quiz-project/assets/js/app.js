@@ -46,21 +46,34 @@ let wrapper = document.querySelector('.quiz__wrapper');
 startQuiz.addEventListener('click', handleStartQuiz);
 resetQuizButton.addEventListener('click', handleResetButton);
 
+const getNumOfQuestions = async () => {
+    try {
+        let url = 'http://localhost:3000/numofQuestions';
+        const response = await fetch(url);
+        const num = await response.json();
+        numOfQuestions = num.number;
+    }
+    catch(error) { 
+        // debug
+        console.warn(error);
+        
+        let errorElement = createElement("p", [quizDynamicNames.error], undefined, "Quiz couldn't load");
+        wrapper.appendChild(errorElement);
+    } 
+}
+
+
 const getQuestion = async () => {
     try {
-            let urls = [`http://localhost:3000/questions?id=${currentQuestionIndex}`, `http://localhost:3000/numofQuestions`];
+            let url = `http://localhost:3000/questions?id=${currentQuestionIndex}`;
 
         // if(response.ok) { 
-            const responses = await getAllUrls(urls);
-            console.log(responses);
-            fetchedQuestionIndex = responses[0][0].id;
-            fetchedQuestionTimer = responses[0][0].timer;
-            console.log(fetchedQuestionTimer);
-            fetchedQuestion = responses[0][0];
-            renderQuestionBlock(responses[0][0]);
-
-            numOfQuestions = responses[1].number;
-            console.log(numOfQuestions)
+            const response = await fetch(url);
+            const res = await response.json(response);
+            fetchedQuestionIndex = res[0].id;
+            fetchedQuestionTimer = res[0].timer;
+            fetchedQuestion = res[0];
+            renderQuestionBlock(fetchedQuestion);
             let loader = get('.' + quizDynamicNames.loader);
             if(loader) {
                 loader.remove();
@@ -76,21 +89,21 @@ const getQuestion = async () => {
     } 
 }
 
-async function getAllUrls(urls) {
-    console.log(urls);
-    try {
-        let data = await Promise.all(
-            urls.map(url =>fetch(url).then((response) => response.json()))
-        );
-        console.log(data);
-        return (data)
+// async function getAllUrls(urls) {
+//     console.log(urls);
+//     try {
+//         let data = await Promise.all(
+//             urls.map(url =>fetch(url).then((response) => response.json()))
+//         );
+//         console.log(data);
+//         return (data)
         
-    } catch (error) {
-        console.log(error)
+//     } catch (error) {
+//         console.log(error)
 
-        throw (error)
-    }
-}
+//         throw (error)
+//     }
+// }
 
 
 // creating loader
@@ -101,16 +114,14 @@ function setLoader() {
 }
 
 // start quiz button
-
-// imenovati funkciju za start 
 function handleStartQuiz() {
     let quizPos = get('#quiz');
     quizPos.scrollIntoView({behavior: "smooth"});
     currentQuestionIndex = 0;
     currentPoints = 0;
 
-    // dohvatiti broj pitanja ovde
     // setLoader();
+    getNumOfQuestions();
     getCurrentPoints();
     setTimer();
     getQuestion();
@@ -215,9 +226,9 @@ function revealAnswers (question) {
     let allAnswersArr = Array.from(allAnswers);
     allAnswersArr.forEach (answer => {
         let everyAnswer = question.answers.filter(element => element.correct === true);
-        console.log(everyAnswer);
+    
         if(everyAnswer.text === answer.innerHTML) {
-            console.log(answer);
+            
             answer.classList.add(quizDynamicNames.correct);
         } else {
             answer.classList.add(quizDynamicNames.wrong);
