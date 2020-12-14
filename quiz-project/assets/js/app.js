@@ -1,4 +1,4 @@
-// quiz
+// QUIZ CLASSES
 quizClassNames = {
     startQuiz: '.home-intro__start-quiz',
     points: '.quiz__points',
@@ -7,7 +7,8 @@ quizClassNames = {
     answer: '.quiz__answer',
     resetQuiz: '.js-reset',
     submit: '.js-submit',
-    wrapper: '.quiz__wrapper'
+    wrapper: '.quiz__wrapper',
+    timer: '.quiz__timer'
 }
 quizDynamicNames = {
     question: 'quiz__question',
@@ -15,76 +16,108 @@ quizDynamicNames = {
     answer: 'quiz__answer',
     selectedAnswer: 'quiz__answer--selected',
     correct: 'quiz__answer--correct',
+    selectedCorrect: 'quiz__answer--correct-selected',
+    selectedWrong: 'quiz__answer--wrong-selected',
     wrong: 'quiz__answer--wrong',
     questionBlock: 'quiz__question-block',
     activeQuestionBlock: 'quiz__question-block--active',
     error: 'quiz__wrapper-error',
     loader: 'quiz__wrapper-loader'
 }
+// INIT VARS
+let currentQuestionIndex;
+let currentPoints;
 
-const url = 'http://localhost:3000/questions';
-const getQuestions = async () => {
+// -fetching data from json server
+let fetchedQuestionIndex;
+let fetchedQuestion;
+let fetchedQuestionTimer;
+let numOfQuestions;
+
+// -quiz buttons
+let startQuiz = get(quizClassNames.startQuiz);
+let resetQuizButton = get(quizClassNames.resetQuiz);
+let submit = get(quizClassNames.submit);
+
+let points = get(quizClassNames.points);
+let wrapper = document.querySelector('.quiz__wrapper');
+
+// EVENT LISTENERS
+startQuiz.addEventListener('click', handleStartQuiz);
+resetQuizButton.addEventListener('click', handleResetButton);
+
+const getQuestion = async () => {
     try {
-        const response = await fetch(url)
-        if(response.ok) {
-            const questionsJson = await response.json();
-            renderQuestionBlock(questionsJson[currentQuestionIndex]);
+            let urls = [`http://localhost:3000/questions?id=${currentQuestionIndex}`, `http://localhost:3000/numofQuestions`];
+
+        // if(response.ok) { 
+            const responses = await getAllUrls(urls);
+            console.log(responses);
+            fetchedQuestionIndex = responses[0][0].id;
+            fetchedQuestionTimer = responses[0][0].timer;
+            console.log(fetchedQuestionTimer);
+            fetchedQuestion = responses[0][0];
+            renderQuestionBlock(responses[0][0]);
+
+            numOfQuestions = responses[1].number;
+            console.log(numOfQuestions)
             let loader = get('.' + quizDynamicNames.loader);
             if(loader) {
                 loader.remove();
             }
-        } 
+        // } 
     }
-    catch(error) {
-        error = createElement("p", [quizDynamicNames.error], undefined, "Quiz couldn't load");
-        wrapper.appendChild(error);
-    } 
-}
-const getSelected = async () => {
-    try {
-        const response = await fetch(url)
-        if(response.ok) {
-            const questionsJson = await response.json();
-            getSelectedAnswers(questionsJson[currentQuestionIndex]);
-            getCurrentPoints();
-            if(currentQuestionIndex === questionsJson.length-1) {
-                setFinishButton();
-            } else {
-                setNextQuestion();
-            }
-        } 
-    }
-    catch(error) {
-        error = createElement("p", [quizDynamicNames.error], undefined, "Error");
-        wrapper.appendChild(error);
+    catch(error) { 
+        // debug
+        console.warn(error);
+        
+        let errorElement = createElement("p", [quizDynamicNames.error], undefined, "Quiz couldn't load");
+        wrapper.appendChild(errorElement);
     } 
 }
 
+async function getAllUrls(urls) {
+    console.log(urls);
+    try {
+        let data = await Promise.all(
+            urls.map(url =>fetch(url).then((response) => response.json()))
+        );
+        console.log(data);
+        return (data)
+        
+    } catch (error) {
+        console.log(error)
+
+        throw (error)
+    }
+}
+
+
+// creating loader
 function setLoader() {
     let wrapper = get(quizClassNames.wrapper);
     let loader = createElement('p', [quizDynamicNames.loader], undefined, 'Loading...');
     wrapper.appendChild(loader);
 }
 
-let currentQuestionIndex;
-let currentPoints;
 // start quiz button
-let startQuiz = get(quizClassNames.startQuiz);
-startQuiz.addEventListener('click', function () {
+
+// imenovati funkciju za start 
+function handleStartQuiz() {
     let quizPos = get('#quiz');
     quizPos.scrollIntoView({behavior: "smooth"});
     currentQuestionIndex = 0;
     currentPoints = 0;
-    
-    setLoader();
-    setTimeout(getCurrentPoints, 2000);
-    setTimeout(getQuestions, 2000);
-    
-    // getQuestions();
+
+    // dohvatiti broj pitanja ovde
+    // setLoader();
+    getCurrentPoints();
+    setTimer();
+    getQuestion();
     setSubmit();
-});
+};
 
-
+// adding and removing event listeners from the same button for different functionalities
 function setSubmit() {
     let submitAnswers = get(quizClassNames.submit);
     submitAnswers.innerHTML = 'Submit';
@@ -110,24 +143,28 @@ function setFinishButton() {
     finishQuiz.addEventListener('click', handleFinishButton);
 }
 
+
 function handleSubmit() {
-    // getCurrentPoints();
-    getSelected();
+    getSelectedAnswers(fetchedQuestion);
+    getCurrentPoints();
+    revealAnswers(fetchedQuestion);
     let answers = document.querySelectorAll(quizClassNames.answers)[currentQuestionIndex];
     answers.style.pointerEvents = 'none';
-    // if(currentQuestionIndex === questions.length-1) {
-    //     setFinishButton();
-    // } else {
-        // setNextQuestion();
-    // }
+    if(fetchedQuestionIndex + 1 === numOfQuestions) {
+        setFinishButton();
+    } else {
+        setNextQuestion();
+    }
 }
 
 function handleNextQuestion() {
     hidePreviousBlock(currentQuestionIndex);
     currentQuestionIndex++;
     
-    getQuestions();
+    getQuestion();
+    
     setSubmit();
+    // setTimer();
 }
 
 function handleFinishButton() {
@@ -140,42 +177,15 @@ function handleFinishButton() {
     points.style.display = 'none';
 }
 
+// preventing body scroll so that the quiz is available only on start click
 function preventScroll () {
     document.body.style.overflow = 'hidden';
 }
 const el = get('body');
 el.onwheel = preventScroll;
-
-// object with questions and answers
-// let questions = [
-//     {
-//         question: 'First question?', 
-//         answers: [
-//             { text: 'First answer 1', correct: true},
-//             { text: 'Second answer 1', correct: false},
-//             { text: 'Third answer 1', correct: true},
-//             { text: 'Fourth answer 1', correct: false},
-//             { text: 'Fifth answer 1', correct: true}
-//         ]
-//     },
-//     {
-//         question: 'Second question?',
-//         answers: [
-//             { text: 'First answer 2', correct: false},
-//             { text: 'Second answer 2', correct: true},
-//             { text: 'Third answer 2', correct: true}
-//         ]
-//     },
-//     {
-//         question: 'Third question?',
-//         answers: [
-//             { text: 'First answer 3', correct: true},
-//             { text: 'Second answer 3', correct: false},
-//             { text: 'Third answer 3', correct: false},
-//             { text: 'Fourth answer 3', correct: false}
-//         ]
-//     }
-// ];
+window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+}; 
 
 // version with nested loop
 // function getSelectedAnswers(question) {
@@ -199,30 +209,46 @@ el.onwheel = preventScroll;
 //     });  
 // }
 
+// on submit correct and wrong answers are revealed
+function revealAnswers (question) {
+    let allAnswers = document.querySelectorAll(`div.${quizDynamicNames.activeQuestionBlock} button.${quizDynamicNames.answer}`);
+    let allAnswersArr = Array.from(allAnswers);
+    allAnswersArr.forEach (answer => {
+        let everyAnswer = question.answers.filter(element => element.correct === true);
+        console.log(everyAnswer);
+        if(everyAnswer.text === answer.innerHTML) {
+            console.log(answer);
+            answer.classList.add(quizDynamicNames.correct);
+        } else {
+            answer.classList.add(quizDynamicNames.wrong);
+        }
+    })
+}
 
-function getSelectedAnswers (question){
+
+// getting selected answers, setting correct and wrong classes based on json
+function getSelectedAnswers (question) {
         // without nested loop
         let selected = document.querySelectorAll(`div.${quizDynamicNames.activeQuestionBlock} button.${quizDynamicNames.selectedAnswer}`);
-        // dohvatiti samo vidljive, ako nemaju drugu klasu
         let selectedArray = Array.from(selected);
-
         selectedArray.forEach (answer => {
             let filteredAnswer = question.answers.filter(answerObject => (answerObject.text === answer.innerHTML))[0];
 
             if(!filteredAnswer) {
                 return;
             }
-            // ako ima greska razmisliti o resenju (greska u kvizu npr)
-            if(filteredAnswer.correct) {
-                answer.classList.add(quizDynamicNames.correct);
+
+            if(filteredAnswer.correct){
+                answer.classList.add(quizDynamicNames.selectedCorrect);
                 currentPoints++;
-            } else {
-                answer.classList.add(quizDynamicNames.wrong);
+            }
+            else {
+                answer.classList.add(quizDynamicNames.selectedWrong);
                 currentPoints--;
             }
         });
 
-    // ispod je verzija sa dve forEach petlje
+    // version with two forEach loops
     // selectedArray.forEach(answer => {
     //     question.answers.forEach(answerObject => {
     //         if(answer.innerHTML === answerObject.text ) {
@@ -238,9 +264,25 @@ function getSelectedAnswers (question){
     // }); 
 }
 
+// writing to DOM the current points
 function getCurrentPoints() {
     get(quizClassNames.points).innerHTML = "Points: " + currentPoints;
+}
 
+function setTimer() {
+    let id = setInterval (function() { 
+        fetchedQuestionTimer--; 
+        if(fetchedQuestionTimer < 10) {
+            get(quizClassNames.timer).innerHTML = 'Timer: 0' + fetchedQuestionTimer;
+        }
+        else {
+            get(quizClassNames.timer).innerHTML = 'Timer: ' + fetchedQuestionTimer;
+        }
+
+        if(fetchedQuestionTimer === 0) {
+            clearInterval(id);
+        }
+    }, 1000);
 }
 
 // on answer click (changing background color when selected)
@@ -250,7 +292,6 @@ function selectedAnswer(answer) {
         answer.classList.toggle(quizDynamicNames.selectedAnswer);
         let selectedArr = document.querySelectorAll(`div.${quizDynamicNames.activeQuestionBlock} button.${quizDynamicNames.selectedAnswer}`);
         let selected = Array.from(selectedArr);
-        console.log(selected);
         
         if(selected.length === 0) {
             submitAnswers.disabled = true;
@@ -295,17 +336,12 @@ function renderNextQuestionBlock() {
 }
 
 // reset quiz
-let resetQuizButton = get(quizClassNames.resetQuiz);
-let submit = get(quizClassNames.submit);
-let points = get(quizClassNames.points);
-let wrapper = document.querySelector('.quiz__wrapper');
-resetQuizButton.addEventListener('click', function() {
+function handleResetButton() {
     document.documentElement.scrollTop = 0;
     wrapper.innerHTML = '';
     submit.style.display = 'block';
     points.style.display = 'block';
-});
-
+}
 
 // slider section
 // sliderClassNames= {

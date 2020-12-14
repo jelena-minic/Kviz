@@ -1,6 +1,11 @@
 {
+    "numofQuestions": {
+        "number": 5
+    },
     "questions" : [
-        {
+        {   
+            "id": 0,
+            "timer": 15,
             "question": "Which countries hosted the Olympic games more than two times?", 
             "answers": [
                 { 
@@ -26,6 +31,8 @@
             ]
         },
         {
+            "id": 1,
+            "timer": 13,
             "question": "Which states in the US don't have a city named Athens?", 
             "answers": [
                 { 
@@ -47,6 +54,8 @@
             ]
         },
         {
+            "id": 2,
+            "timer": 10,
             "question": "Capital city of Congo is Brazzaville?", 
             "answers": [
                 { 
@@ -60,6 +69,8 @@
             ]
         },
         {
+            "id": 3,
+            "timer": 20,
             "question": "Which countries are the biggest producers of cocoa?", 
             "answers": [
                 { 
@@ -81,6 +92,8 @@
             ]
         },
         {
+            "id": 4,
+            "timer": 18,
             "question": "What is the best place to see the Northern Lights", 
             "answers": [
                 { 
@@ -109,4 +122,5 @@
                 }
             ]
         }
-]}
+    ]
+}
