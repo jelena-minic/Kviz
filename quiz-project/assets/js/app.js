@@ -8,7 +8,8 @@ quizClassNames = {
     resetQuiz: '.js-reset',
     submit: '.js-submit',
     wrapper: '.quiz__wrapper',
-    timer: '.quiz__timer'
+    timer: '.quiz__timer',
+    timerLeak: '.quiz__timerVisual'
 }
 quizDynamicNames = {
     question: 'quiz__question',
@@ -27,11 +28,13 @@ quizDynamicNames = {
 // INIT VARS
 let currentQuestionIndex;
 let currentPoints;
+let timer;
 
 // -fetching data from json server
 let fetchedQuestionIndex;
 let fetchedQuestion;
 let fetchedQuestionTimer;
+let widthPerSecond;
 let numOfQuestions;
 
 // -quiz buttons
@@ -72,6 +75,14 @@ const getQuestion = async () => {
             const res = await response.json(response);
             fetchedQuestionIndex = res[0].id;
             fetchedQuestionTimer = res[0].timer;
+            widthPerSecond = fetchedQuestionTimer;
+            if(fetchedQuestionTimer < 10) {
+                get(quizClassNames.timer).innerHTML = 'Timer: 0' + fetchedQuestionTimer;
+            }
+            else {
+                get(quizClassNames.timer).innerHTML = 'Timer: ' + fetchedQuestionTimer;
+            }
+            setTimer();
             fetchedQuestion = res[0];
             renderQuestionBlock(fetchedQuestion);
             let loader = get('.' + quizDynamicNames.loader);
@@ -123,8 +134,9 @@ function handleStartQuiz() {
     // setLoader();
     getNumOfQuestions();
     getCurrentPoints();
-    setTimer();
+    
     getQuestion();
+    // setTimer();
     setSubmit();
 };
 
@@ -173,9 +185,8 @@ function handleNextQuestion() {
     currentQuestionIndex++;
     
     getQuestion();
-    
-    setSubmit();
     // setTimer();
+    setSubmit();
 }
 
 function handleFinishButton() {
@@ -225,14 +236,14 @@ function revealAnswers (question) {
     let allAnswers = document.querySelectorAll(`div.${quizDynamicNames.activeQuestionBlock} button.${quizDynamicNames.answer}`);
     let allAnswersArr = Array.from(allAnswers);
     allAnswersArr.forEach (answer => {
-        let everyAnswer = question.answers.filter(element => element.correct === true);
-    
-        if(everyAnswer.text === answer.innerHTML) {
-            
+        let everyAnswer = question.answers.filter(element => (element.text === answer.innerHTML))[0];
+        console.log(everyAnswer);
+        if(everyAnswer.correct) {
             answer.classList.add(quizDynamicNames.correct);
         } else {
             answer.classList.add(quizDynamicNames.wrong);
         }
+        
     })
 }
 
@@ -244,7 +255,7 @@ function getSelectedAnswers (question) {
         let selectedArray = Array.from(selected);
         selectedArray.forEach (answer => {
             let filteredAnswer = question.answers.filter(answerObject => (answerObject.text === answer.innerHTML))[0];
-
+            
             if(!filteredAnswer) {
                 return;
             }
@@ -279,22 +290,52 @@ function getSelectedAnswers (question) {
 function getCurrentPoints() {
     get(quizClassNames.points).innerHTML = "Points: " + currentPoints;
 }
+let questionCount = 0;
+let divWidth = get(quizClassNames.timerLeak).style.width;
+
+let fullWidth = parseFloat('115px', 10);
+let remaining = fullWidth;
+console.log(remaining);
+function countTimer() {
+    fetchedQuestionTimer--; 
+    console.log(remaining);
+    console.log(fetchedQuestionTimer);
+    if(fetchedQuestionTimer <= 0 || get(quizClassNames.submit).innerHTML === "Next question") {
+        clearInterval(timer);
+        revealAnswers(fetchedQuestion);
+        setNextQuestion();
+        submit.disabled = false;
+        remaining=fullWidth;
+        get(quizClassNames.timer).innerHTML = 'Timer: 00';
+        return;
+    }
+    if(fetchedQuestionTimer < 10) {
+        get(quizClassNames.timer).innerHTML = 'Timer: 0' + fetchedQuestionTimer;
+    }
+    else {
+        get(quizClassNames.timer).innerHTML = 'Timer: ' + fetchedQuestionTimer;
+    }
+    
+    get(quizClassNames.timerLeak).animate([
+        { width: `${remaining}px` },
+        { width: `${remaining - (remaining/widthPerSecond)}px` }
+    ], {
+        duration: 1000, 
+        iterations: fetchedQuestionTimer
+    });
+    remaining -= fullWidth/widthPerSecond;
+}
 
 function setTimer() {
-    let id = setInterval (function() { 
-        fetchedQuestionTimer--; 
-        if(fetchedQuestionTimer < 10) {
-            get(quizClassNames.timer).innerHTML = 'Timer: 0' + fetchedQuestionTimer;
-        }
-        else {
-            get(quizClassNames.timer).innerHTML = 'Timer: ' + fetchedQuestionTimer;
-        }
-
-        if(fetchedQuestionTimer === 0) {
-            clearInterval(id);
-        }
-    }, 1000);
+    timer = setInterval (countTimer, 1000);
+    // questionCount++;
+    // 
+    // if(questionCount === numOfQuestions) {
+    //     get(quizClassNames.timer).innerHTML = '';
+    // }
 }
+
+
 
 // on answer click (changing background color when selected)
 function selectedAnswer(answer) {
@@ -527,4 +568,4 @@ if(burger!=null) {
 //         console.log(afterNoon);
 //     }
 // }
-// randomize(11, 14);
+// randomize(11, 14)

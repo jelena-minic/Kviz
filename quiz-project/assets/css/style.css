@@ -393,6 +393,21 @@ button {
   justify-content: space-between;
   letter-spacing: 5px;
 }
+.quiz__timerVisual {
+  width: 115px;
+  height: 5px;
+  background-color: #dd536a;
+  margin-top: 2px;
+  animation: divLeak 1s linear;
+}
+@keyframes divLeak {
+  from {
+    width: 115px;
+  }
+  to {
+    width: 0%;
+  }
+}
 .quiz__question {
   padding-right: 30px;
   padding-left: 30px;
